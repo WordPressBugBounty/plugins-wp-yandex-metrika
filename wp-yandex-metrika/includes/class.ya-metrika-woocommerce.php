@@ -84,7 +84,8 @@ class YaMetrikaWoocommerce
     }
 
     public function my_setcookie() {
-        setcookie('delayed_ym_data', null, time()+60, COOKIEPATH, COOKIE_DOMAIN);
+		if( ! headers_sent() )
+			setcookie('delayed_ym_data', '', time()+60, COOKIEPATH, COOKIE_DOMAIN);
     }
 
     public function registerCommonData(){
@@ -347,6 +348,10 @@ class YaMetrikaWoocommerce
         $productId = $item['variation_id'] ? $item['variation_id'] : $item['product_id'];
         $product = wc_get_product($productId);
 
+        if (!$product || !is_a($product, 'WC_Product')) {
+            return;
+        }
+
         $additionalData = [
             "quantity" => $item['quantity']
         ];
@@ -399,6 +404,11 @@ class YaMetrikaWoocommerce
             $product = $item->get_product();
             $quantity = $item->get_quantity();
 
+            if (!$product || !is_a($product, 'WC_Product')) {
+                $index++;
+                continue;
+            }
+
             $additionalData = [
                 'position' => $index,
                 'quantity' => $quantity
@@ -438,6 +448,10 @@ class YaMetrikaWoocommerce
             $productId = $item['variation_id'] ? $item['variation_id'] : $item['product_id'];
             $product = wc_get_product($productId);
 
+            if (!$product || !is_a($product, 'WC_Product')) {
+                return;
+            }
+
             if (is_null($quantity)) {
                 $quantity = $item['quantity'];
             }
@@ -470,6 +484,10 @@ class YaMetrikaWoocommerce
                 $productId = $item['variation_id'] ? $item['variation_id'] : $item['product_id'];
                 $product = wc_get_product($productId);
 
+                if (!$product || !is_a($product, 'WC_Product')) {
+                    return;
+                }
+
                 if (is_null($quantity)) {
                     $quantity = $item['quantity'];
                 }
@@ -498,6 +516,10 @@ class YaMetrikaWoocommerce
         if (is_a($product, 'WC_Product_Variation')) {
             $variation = $product;
             $product = wc_get_product($variation->get_parent_id());
+
+            if( ! $product instanceof WC_Product )
+                return [];
+            
             $attributes = $variation->get_attributes();
             ksort($attributes);
             $additional = array_merge([
@@ -523,8 +545,13 @@ class YaMetrikaWoocommerce
 
     public function getProductBrand($product){
         $options = YaMetrika::getInstance()->options;
+
+        if (empty($options['brand'][0])) {
+            return null;
+        }
+
         $brandType = $options['brand'][0]['brand_type'];
-        $brandSlug = $options['brand'][0]['brand_slug'];
+        $brandSlug = isset($options['brand'][0]['brand_slug']) ? $options['brand'][0]['brand_slug'] : '';
         $brand = null;
 
         if (!empty($brandSlug)) {

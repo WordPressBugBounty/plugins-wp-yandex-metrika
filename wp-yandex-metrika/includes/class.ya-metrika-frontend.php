@@ -21,12 +21,14 @@ class YaMetrikaFrontend
         $domain = '.'.$baseDomain;
 		$secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
 
-        if (isset($_COOKIE['_ym_uid'])) {
-			setcookie('_ym_uid', $_COOKIE['_ym_uid'], $expires, $path, $domain, $secure);
-		}
+		if( ! headers_sent() ){			
+			
+			if( isset( $_COOKIE['_ym_uid'] ) )
+				setcookie('_ym_uid', $_COOKIE['_ym_uid'], $expires, $path, $domain, $secure);
 
-        if (isset($_COOKIE['_ym_d'])) {
-			setcookie('_ym_d', time(), $expires, $path, $domain, $secure);
+			if (isset( $_COOKIE['_ym_d'] ) )
+				setcookie('_ym_d', time(), $expires, $path, $domain, $secure);
+		
 		}
     }
 

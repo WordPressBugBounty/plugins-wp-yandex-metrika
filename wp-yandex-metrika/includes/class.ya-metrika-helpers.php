@@ -9,7 +9,8 @@ class YaMetrikaHelpers
         $path = [];
 
         foreach ($categoryPath as $category) {
-            $path[] = $category->name;
+			if( ! empty( $category->name ) )
+				$path[] = $category->name;
         }
 
         return implode('/', $path);
@@ -27,7 +28,7 @@ class YaMetrikaHelpers
 
         $path = [$term];
 
-        if ($term->parent > 0) {
+        if ( ! empty( $term->parent ) ) {
             $path = array_merge($path, self::buildTermPath($term->parent, $taxonomy));
         }
 

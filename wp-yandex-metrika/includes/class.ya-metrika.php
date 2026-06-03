@@ -7,6 +7,7 @@ class YaMetrika{
 		'counters' => [],
 		'brand_type' => 'taxonomy',
 		'brand_slug' => '',
+		'brand' => [],
 		'custom_targets' => [],
         'data_layer' => 'dataLayer',
 	];

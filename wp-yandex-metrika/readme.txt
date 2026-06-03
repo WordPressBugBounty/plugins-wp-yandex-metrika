@@ -2,9 +2,9 @@
 Contributors: yandexmetrika
 Tags: яндекс.метрика, яндекс, метрика, metrica, yandex, ecommerce, commerce, e-commerce, wordpress ecommerce, tracking, yandex metrics, metrik, stats, statistics, tools, analytics, analytics tool
 Requires at least: 5.2.9
-Tested up to: 6.8.2
+Tested up to: 6.2.2
 Requires PHP: 5.6.20
-Stable tag: 1.2.2
+Stable tag: 1.2.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -113,11 +113,11 @@ Session Replay technology offers an entirely new level of detail for analyzing t
 
 == Changelog ==
 
-= 1.2.2 =
-Some minor bugfixes
+= 1.2.4 =
+Fixed php warning in frontend area
 
-= 1.2.1 =
-Some minor bugfixes
+= 1.2.3 =
+Fixed some minor errors in frontend area
 
 = 1.2.0 =
 Resolved statistics collection issue with code minimization plugins

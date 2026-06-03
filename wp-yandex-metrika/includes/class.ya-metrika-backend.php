@@ -409,7 +409,8 @@ class YaMetrikaBackend
 
     public function displayRepeaterField($args)
     {
-        $rows = YaMetrika::getInstance()->options[$args['name']];
+        $options = YaMetrika::getInstance()->options;
+        $rows = isset($options[$args['name']]) ? $options[$args['name']] : [];
         $fields = $args['fields'];
 
         if (!is_array($rows) || empty($rows) || (isset($rows[0]) && !is_array($rows[0]))) {
@@ -500,7 +501,8 @@ class YaMetrikaBackend
 
     public function displayMultiRowField($args)
     {
-        $rows = YaMetrika::getInstance()->options[$args['name']];
+        $options = YaMetrika::getInstance()->options;
+        $rows = isset($options[$args['name']]) ? $options[$args['name']] : [];
         $fields = $args['fields'];
 
         if (!is_array($rows) || empty($rows) || (isset($rows[0]) && !is_array($rows[0]))) {
